@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 8px 32px 0 rgba(173, 178, 240, 0.37);
+  }
+  50% {
+    box-shadow: 0 8px 32px 0 rgba(173, 178, 240, 0.6);
+  }
+  100% {
+    box-shadow: 0 8px 32px 0 rgba(173, 178, 240, 0.37);
+  }
+}
+
+body {
+  background: linear-gradient(135deg, rgba(66, 69, 74, 0.95), rgba(15, 9, 9, 0.875));
+  min-height: 100vh;
+  backdrop-filter: blur(10px);
+}
+
+.glass-effect {
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(231, 160, 160, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(173, 178, 240, 0.37);
+  border-radius: 17px;
+  transition: all 0.3s ease;
+}
+
+.glass-effect:hover {
+  transform: translateY(-5px) scale(1.005);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(231, 160, 160, 0.2);
+  animation: glow 3s infinite;
+}
+
+/* Add smooth transitions for form elements */
+input, button {
+  transition: all 0.2s ease;
+}
+
+input:focus {
+  transform: translateY(-2px);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Add this to your existing index.css file */
+.shadow-glow {
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.15);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.5);
+}

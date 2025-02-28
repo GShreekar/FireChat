@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { collection, query, orderBy, limit, addDoc, doc, getDoc } from 'firebase/firestore';
+import { collection, query, orderBy, limit, addDoc, doc, getDoc, DocumentData } from 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { auth, db } from '../firebase/config';
 import { serverTimestamp } from 'firebase/firestore';
@@ -27,7 +27,7 @@ function ChatRoom() {
     const messagesQuery = query(messagesRef, orderBy('createdAt'), limit(25));
     const [userDisplayName, setUserDisplayName] = useState<string>('Anonymous User');
   
-    const [messages] = useCollectionData(messagesQuery, { idField: 'id' });
+    const [messages] = useCollectionData(messagesQuery);
     const [formValue, setFormValue] = useState('');
 
     useEffect(() => {
@@ -42,7 +42,7 @@ function ChatRoom() {
         };
         
         fetchUserDisplayName();
-    }, [auth.currentUser]);
+    }, []);
   
     const sendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -61,7 +61,7 @@ function ChatRoom() {
     return (
         <>
             <main className="flex flex-col h-100 overflow-y-auto mb-4 p-2">
-                {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+                {messages && messages.map(msg => <ChatMessage key={msg.id} message={{text: msg.text, uid: msg.uid, displayName: msg.displayName, id: msg.id}} />)}
                 <span ref={dummy}></span>
             </main>
     
@@ -85,7 +85,7 @@ function ChatRoom() {
 }
 
 interface MessageProps {
-    message: {
+    message: DocumentData & {
         id: string;
         text: string;
         uid: string;

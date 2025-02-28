@@ -7,16 +7,22 @@ function SignIn() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     
-    const signIn = async (e) => {
-        e.preventDefault();
-        setError('');
-        
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-        } catch (error) {
-            setError(error.message);
-            console.error('Error signing in:', error);
-        }
+    interface SignInError {
+      message: string;
+      code?: string;
+    }
+
+    const signIn = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setError('');
+      
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+      } catch (error: unknown) {
+        const firebaseError = error as SignInError;
+        setError(firebaseError.message);
+        console.error('Error signing in:', firebaseError);
+      }
     }
   
     return (
